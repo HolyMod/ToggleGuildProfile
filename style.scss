@@ -1,0 +1,22 @@
+.tgp-button {
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    left: 5px;
+    color: #ddd;
+    background: rgba(32, 34, 37, 0.8);
+    padding: 1px 4px;
+    border-radius: 100px;
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+    transition: opacity .15s ease-out, transform .15s ease-out;
+
+    > div {
+        display: inline-flex;
+    }
+}
+
+.REPLACE_CLASS_HEADER_NORMAL:hover .tgp-button {
+    transform: translateZ(0px);
+    opacity: 1;
+}
