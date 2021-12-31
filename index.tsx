@@ -52,9 +52,11 @@ export default class ToggleGuildProfile {
         function PatchedAvatar({__TGP_ORIGINAL: Original, ...props}) {
             const {active, userId, guildId, viewType} = useContext(ViewContext);
             const user = Flux.useStateFromStores([UserStore], () => UserStore.getUser(userId));
-            const member = Flux.useStateFromStores([GuildMemberStore], () => GuildMemberStore.getMember(guildId, user.id));
+            const member = Flux.useStateFromStores([GuildMemberStore], () => GuildMemberStore.getMember(guildId, user?.id));
 
-            if (!active || viewType === ViewTypes.DEFAULT || !user || user.bot || !member?.avatar) return (
+            if (!user) return <Original {...props} />;
+
+            if (!active || viewType === ViewTypes.DEFAULT || user.bot || !member?.avatar) return (
                 <Original {...props} src={AvatarUtils.getUserAvatarURL(user, true, 80)} />
             );
 
@@ -118,12 +120,12 @@ export default class ToggleGuildProfile {
             let {active, viewType, setView} = useContext(ViewContext);
             if (!active) return children;
             const guildMember = Flux.useStateFromStores([GuildMemberStore], () => {
-                return GuildMemberStore.getMember(props.guildId, props.user.id);
+                return GuildMemberStore.getMember(props.guildId, props.user?.id);
             });
 
             try {
                 const banner = ReactTools.findInReactTree(children, e => e?.style?.backgroundImage);
-                if (!banner) return children;
+                if (!banner || !guildMember) return children;
 
                 if (guildMember.banner) switch (viewType) {
                     case ViewTypes.DEFAULT: {
