@@ -1,7 +1,7 @@
 {
     "name": "ToggleGuildProfile",
     "author": "Strencher",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Toggle the userpopout view between guild customized profile and normal profile.",
     "entry": "./index.tsx"
 }

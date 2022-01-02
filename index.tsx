@@ -23,6 +23,7 @@ const [
     UserBanner,
     UserPopoutClasses,
     UserBio,
+    userBioClasses,
     UserPopoutInlineAvatar
 ] = Webpack.bulk(
     ["UserPopoutAvatar"],
@@ -31,6 +32,7 @@ const [
     Webpack.Filters.byDisplayName("UserBanner", true),
     ["userPopout", "headerNormal"],
     Webpack.Filters.byDisplayName("UserBio", true),
+    ["aboutMeBody", "aboutMeTitle"],
     Webpack.Filters.byDisplayName("UserPopoutInlineAvatar", true)
 );
 
@@ -203,6 +205,9 @@ export default class ToggleGuildProfile {
         Injector.inject({
             module: UserBio,
             method: "default",
+            before(_, [props]) {
+                if (!props.className) props.className = userBioClasses.aboutMeBody;
+            },
             after: (_, [props]) => {
                 if (props.__patch) return;
 
